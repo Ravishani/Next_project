@@ -1,65 +1,424 @@
-import Image from "next/image";
-
+"use client";
+import { useState } from "react";
+import { IconMenu2, IconX, IconChevronDown } from "@tabler/icons-react";
 export default function Home() {
+  const [mobileMenu, setMobileMenu] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const menuItems = [
+    {
+      title: "Home",
+      href: "/",
+    },
+    {
+      title: "Docs",
+      children: [
+        {
+          title: "Documentation",
+          href: "/documentation",
+        },
+        {
+          title: "API Reference",
+          href: "/api",
+        },
+        {
+          title: "Guides",
+          href: "/guides",
+        },
+      ],
+    },
+    {
+      title: "Blog",
+      children: [
+        {
+          title: "Latest Posts",
+          href: "/blog",
+        },
+        {
+          title: "News",
+          href: "/news",
+        },
+      ],
+    },
+    {
+      title: "Templates",
+      children: [
+        {
+          title: "Next.js",
+          href: "/templates/next",
+        },
+        {
+          title: "React",
+          href: "/templates/react",
+        },
+        {
+          title: "Laravel",
+          href: "/templates/laravel",
+        },
+      ],
+    },
+    {
+      title: "Enterprise",
+      children: [
+        {
+          title: "Solutions",
+          href: "/enterprise",
+        },
+        {
+          title: "Pricing",
+          href: "/pricing",
+        },
+      ],
+    },
+    {
+      title: "Showcase",
+      children: [
+        {
+          title: "Customers",
+          href: "/customers",
+        },
+        {
+          title: "Gallery",
+          href: "/gallery",
+        },
+      ],
+    },
+  ];
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
+    <>
+      <nav className="bg-white shadow relative z-50">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between py-5">
+            {/* Logo */}
+            <img src="/main/next.svg" alt="Logo" className="max-w-[100px]" />
+
+            {/* Desktop Menu */}
+            <ul className="hidden lg:flex items-center gap-8 text-[var(--accents-5)] text-[13px] font-[600]">
+              {menuItems.map((item, index) => (
+                <li key={index} className="relative group">
+                  {item.children ? (
+                    <>
+                      <button className="flex items-center gap-1 hover:text-blue-600 transition">
+                        {item.title}
+                        <IconChevronDown
+                          size={16}
+                          className="transition group-hover:rotate-180"
+                        />
+                      </button>
+
+                      <div className="absolute left-0 top-full mt-4 w-56 bg-white rounded-lg shadow-xl border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                        {item.children.map((child, i) => (
+                          <a
+                            key={i}
+                            href={child.href}
+                            className="block px-5 py-3 hover:bg-gray-100 first:rounded-t-lg last:rounded-b-lg"
+                          >
+                            {child.title}
+                          </a>
+                        ))}
+                      </div>
+                    </>
+                  ) : (
+                    <a href={item.href} className="hover:text-blue-600">
+                      {item.title}
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+
+            {/* Login */}
+            <div className="hidden lg:block">
+              <a
+                href="/login"
+                className="bg-black text-white px-5 py-2 rounded-md hover:bg-white hover:text-black border border-black transition"
+              >
+                Login
+              </a>
+            </div>
+
+            {/* Mobile Button */}
+            <button
+              onClick={() => setMobileMenu(!mobileMenu)}
+              className="lg:hidden"
+            >
+              {mobileMenu ? <IconX size={28} /> : <IconMenu2 size={28} />}
+            </button>
+          </div>
+
+          {/* Mobile Menu */}
+          {mobileMenu && (
+            <div className="lg:hidden border-t py-5">
+              <ul className="space-y-3">
+                {menuItems.map((item, index) => (
+                  <li key={index}>
+                    {item.children ? (
+                      <>
+                        <button
+                          onClick={() =>
+                            setOpenDropdown(
+                              openDropdown === index ? null : index,
+                            )
+                          }
+                          className="flex justify-between items-center w-full py-2 font-medium"
+                        >
+                          {item.title}
+
+                          <IconChevronDown
+                            size={18}
+                            className={`transition-transform duration-300 ${
+                              openDropdown === index ? "rotate-180" : ""
+                            }`}
+                          />
+                        </button>
+
+                        {openDropdown === index && (
+                          <ul className="pl-4 border-l ml-2 mt-2 space-y-2">
+                            {item.children.map((child, i) => (
+                              <li key={i}>
+                                <a
+                                  href={child.href}
+                                  className="block py-2 text-gray-600 hover:text-black"
+                                >
+                                  {child.title}
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </>
+                    ) : (
+                      <a href={item.href} className="block py-2 font-medium">
+                        {item.title}
+                      </a>
+                    )}
+                  </li>
+                ))}
+
+                <li className="pt-4">
+                  <a
+                    href="/login"
+                    className="block text-center bg-black text-white py-3 rounded-md"
+                  >
+                    Login
+                  </a>
+                </li>
+              </ul>
+            </div>
+          )}
+        </div>
+      </nav>
+      <section className="relative z-[-1] bg-[url('http://localhost:3000/main/banner.png')] bg-cover bg-center bg-no-repeat lg:min-h-[450px] min-h-[350px] flex items-center">
+        <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 w-full">
+          <h1 className="text-[35px] lg:text-[66px] text-white font-bold">
+            The React Framework for the Web
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-white mt-4">
+            Used by some of the world's largest companies, Next.js enables you
+            to create high-quality web applications with the power of React
+            components.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+      <section className="lg:py-[60px] py-[30px]">
+        <div className="mx-auto max-w-7xl w-full px-2 sm:px-6 lg:px-8">
+          <h2 className="text-[30px] font-bold mb-5 text-center">
+            What's in Next.js?
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="border border-dotted border-gray-300 rounded-[10px] overflow-hidden bg-white ">
+              <div className="p-3">
+                <img
+                  src="/main/spheres-light.avif"
+                  alt="Built-in Optimizations"
+                  className="w-full h-[150px] object-contain rounded-md"
+                />
+
+                <h2 className="mt-4 text-[20px] font-bold mb-3">
+                  Built-in Optimizations
+                </h2>
+
+                <p className="text-gray-600">
+                  Automatic Image, Font, and Script Optimizations for improved
+                  UX and Core Web Vitals.
+                </p>
+                <div className="py-5">
+                  <a
+                    href=""
+                    className="inline-block bg-blue-900 text-white px-5 py-2 rounded-md hover:bg-blue-800 transition duration-300"
+                  >
+                    Read More
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+      <footer className="bg-black text-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+            {/* Company */}
+            <div>
+              <img
+                src="/main/next.svg"
+                alt="Logo"
+                className="max-w-[180px] bg-white p-3 rounded-lg"
+              />
+
+              <p className="mt-5 text-gray-400 leading-7">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Voluptatibus, asperiores. We provide quality solutions for
+                businesses with modern web technologies.
+              </p>
+
+              <div className="flex gap-4 mt-6">
+                <a
+                  href="#"
+                  className="w-10 h-10 rounded-full bg-gray-800 hover:bg-blue-600 flex items-center justify-center transition"
+                >
+                  <i className="fab fa-facebook-f"></i>
+                </a>
+
+                <a
+                  href="#"
+                  className="w-10 h-10 rounded-full bg-gray-800 hover:bg-sky-500 flex items-center justify-center transition"
+                >
+                  <i className="fab fa-twitter"></i>
+                </a>
+
+                <a
+                  href="#"
+                  className="w-10 h-10 rounded-full bg-gray-800 hover:bg-pink-600 flex items-center justify-center transition"
+                >
+                  <i className="fab fa-instagram"></i>
+                </a>
+
+                <a
+                  href="#"
+                  className="w-10 h-10 rounded-full bg-gray-800 hover:bg-blue-700 flex items-center justify-center transition"
+                >
+                  <i className="fab fa-linkedin-in"></i>
+                </a>
+              </div>
+            </div>
+
+            {/* Quick Links */}
+            <div>
+              <h3 className="text-xl font-semibold mb-6">Quick Links</h3>
+
+              <ul className="space-y-3">
+                {[
+                  "Home",
+                  "About Us",
+                  "Services",
+                  "Portfolio",
+                  "Blog",
+                  "Contact Us",
+                ].map((item) => (
+                  <li key={item}>
+                    <a
+                      href="#"
+                      className="text-gray-400 hover:text-white duration-300 flex items-center gap-2"
+                    >
+                      <span>➜</span> {item}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Services */}
+            <div>
+              <h3 className="text-xl font-semibold mb-6">Our Services</h3>
+
+              <ul className="space-y-3">
+                {[
+                  "Web Development",
+                  "Mobile Apps",
+                  "UI/UX Design",
+                  "Digital Marketing",
+                  "SEO Services",
+                  "Consulting",
+                ].map((item) => (
+                  <li key={item}>
+                    <a
+                      href="#"
+                      className="text-gray-400 hover:text-white duration-300 flex items-center gap-2"
+                    >
+                      <span>➜</span> {item}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Contact */}
+            <div>
+              <h3 className="text-xl font-semibold mb-6">Contact Info</h3>
+
+              <div className="space-y-5 text-gray-400">
+                <div className="flex gap-3">
+                  <span>📍</span>
+                  <p>New Delhi, India</p>
+                </div>
+
+                <div className="flex gap-3">
+                  <span>📞</span>
+                  <a href="tel:+919999999999" className="hover:text-white">
+                    +91 99999 99999
+                  </a>
+                </div>
+
+                <div className="flex gap-3">
+                  <span>✉️</span>
+                  <a
+                    href="mailto:info@example.com"
+                    className="hover:text-white"
+                  >
+                    info@example.com
+                  </a>
+                </div>
+              </div>
+
+              {/* Newsletter */}
+              <div className="mt-8">
+                <h4 className="font-semibold mb-3">Newsletter</h4>
+
+                <div className="flex">
+                  <input
+                    type="email"
+                    placeholder="Email Address"
+                    className="w-full rounded-l-md px-4 py-3 bg-gray-900 border border-gray-700 focus:outline-none"
+                  />
+
+                  <button className="bg-blue-600 hover:bg-blue-700 px-5 rounded-r-md">
+                    Send
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Footer */}
+        <div className="border-t border-gray-800">
+          <div className="mx-auto max-w-7xl px-4 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-gray-500 text-sm">
+              © {new Date().getFullYear()} Your Company. All Rights Reserved.
+            </p>
+
+            <div className="flex gap-6 text-sm">
+              <a href="#" className="text-gray-500 hover:text-white">
+                Privacy Policy
+              </a>
+
+              <a href="#" className="text-gray-500 hover:text-white">
+                Terms & Conditions
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </>
   );
 }
