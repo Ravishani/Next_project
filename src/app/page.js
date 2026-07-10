@@ -1,6 +1,12 @@
 "use client";
 import { useState } from "react";
-import { IconMenu2, IconX, IconChevronDown } from "@tabler/icons-react";
+import {
+  IconMenu2,
+  IconX,
+  IconChevronDown,
+  IconArrowRight,
+} from "@tabler/icons-react";
+import Image from "next/image";
 export default function Home() {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
@@ -92,12 +98,12 @@ export default function Home() {
             <img src="/main/next.svg" alt="Logo" className="max-w-[100px]" />
 
             {/* Desktop Menu */}
-            <ul className="hidden lg:flex items-center gap-8 text-[var(--accents-5)] text-[13px] font-[600]">
+            <ul className="hidden lg:flex items-center gap-8 text-[var(--accents-5)]  font-[700]">
               {menuItems.map((item, index) => (
                 <li key={index} className="relative group">
                   {item.children ? (
                     <>
-                      <button className="flex items-center gap-1 hover:text-blue-600 transition">
+                      <button className="flex items-center gap-1 hover:text-black transition">
                         {item.title}
                         <IconChevronDown
                           size={16}
@@ -118,7 +124,7 @@ export default function Home() {
                       </div>
                     </>
                   ) : (
-                    <a href={item.href} className="hover:text-blue-600">
+                    <a href={item.href} className="hover:text-black">
                       {item.title}
                     </a>
                   )}
@@ -129,10 +135,10 @@ export default function Home() {
             {/* Login */}
             <div className="hidden lg:block">
               <a
-                href="/login"
-                className="bg-black text-white px-5 py-2 rounded-md hover:bg-white hover:text-black border border-black transition"
+                href=""
+                className="ve-cta-btn text-white px-5 py-2 rounded-md transition"
               >
-                Login
+                Get Started <IconArrowRight size={16} />
               </a>
             </div>
 
@@ -207,16 +213,57 @@ export default function Home() {
           )}
         </div>
       </nav>
-      <section className="relative z-[-1] bg-[url('http://localhost:3000/main/banner.png')] bg-cover bg-center bg-no-repeat lg:min-h-[450px] min-h-[350px] flex items-center">
+      <section className="relative z-[-1] bg-[url('/main/banner.png')] bg-cover bg-center bg-no-repeat lg:min-h-[450px] min-h-[350px] flex items-center">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 w-full">
-          <h1 className="text-[35px] lg:text-[66px] text-white font-bold">
-            The React Framework for the Web
-          </h1>
-          <p className="text-white mt-4">
-            Used by some of the world's largest companies, Next.js enables you
-            to create high-quality web applications with the power of React
-            components.
-          </p>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+            {/* 8 Columns */}
+            <div className="lg:col-span-8">
+              <h1 className="text-[35px] lg:text-[66px] leading-[42px] lg:leading-[72px] text-white font-[900]">
+                The <span className="text-[var(--ve-gold)]">React </span>
+                Framework for the Web
+              </h1>
+
+              <p className="text-white mt-4">
+                Used by some of the world's largest companies, Next.js enables
+                you to create high-quality web applications with the power of
+                React components.
+              </p>
+              <div className="lg:py-[20px]">
+                <button className="ve-cta-btn ">Explore Services</button>
+              </div>
+              <div className="flex gap-8">
+                <div className="border-r border-gray-600 pr-4">
+                  <p className="text-[25px] font-black text-white">$4.2B+</p>
+                  <p className="text-[13px] font-bold uppercase tracking-wider text-[var(--accents-5)]">
+                    Assets Managed
+                  </p>
+                </div>
+                <div className="border-r border-gray-600 pr-4">
+                  <p className="text-[25px] font-black text-white">97%</p>
+                  <p className="text-[13px] font-bold uppercase tracking-wider text-[var(--accents-5)]">
+                    Client Satisfaction
+                  </p>
+                </div>
+                <div className="">
+                  <p className="text-[25px] font-black text-white">12+</p>
+                  <p className="text-[13px] font-bold uppercase tracking-wider text-[var(--accents-5)]">
+                    Years Experience
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 4 Columns */}
+            <div className="lg:col-span-4">
+              <Image
+                src="/main/programmer-night.jpg"
+                className="rounded"
+                alt="Hero Image"
+                width={600}
+                height={400}
+              />
+            </div>
+          </div>
         </div>
       </section>
       <section className="lg:py-[60px] py-[30px]">
@@ -225,19 +272,19 @@ export default function Home() {
             What's in Next.js?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="border border-dotted border-gray-300 rounded-[10px] overflow-hidden bg-white ">
-              <div className="p-3">
+            <div className="border border-dotted border-gray-300 rounded-[10px] overflow-hidden bg-white bg-[url('/main/download.png')] bg-cover ">
+              <div className="p-4">
                 <img
                   src="/main/spheres-light.avif"
                   alt="Built-in Optimizations"
                   className="w-full h-[150px] object-contain rounded-md"
                 />
 
-                <h2 className="mt-4 text-[20px] font-bold mb-3">
+                <h2 className="mt-4 text-white text-[20px] font-bold mb-3">
                   Built-in Optimizations
                 </h2>
 
-                <p className="text-gray-600">
+                <p className="text-gray-600 text-white">
                   Automatic Image, Font, and Script Optimizations for improved
                   UX and Core Web Vitals.
                 </p>
