@@ -213,12 +213,12 @@ export default function Home() {
           )}
         </div>
       </nav>
-      <section className="relative z-[-1] bg-[url('/main/banner.png')] bg-cover bg-center bg-no-repeat lg:min-h-[450px] min-h-[350px] flex items-center">
+      <section className="relative py-[30px] z-[-1] bg-[url('/main/banner.png')] bg-cover bg-center bg-no-repeat lg:min-h-[450px] min-h-[350px] flex items-center">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-6 items-center">
             {/* 8 Columns */}
             <div className="lg:col-span-8">
-              <h1 className="text-[35px] lg:text-[66px] leading-[42px] lg:leading-[72px] text-white font-[900]">
+              <h1 className="text-[35px]  lg:text-[66px] leading-[42px] lg:leading-[72px] text-white font-[900]">
                 The <span className="text-[var(--ve-gold)]">React </span>
                 Framework for the Web
               </h1>
@@ -228,25 +228,25 @@ export default function Home() {
                 you to create high-quality web applications with the power of
                 React components.
               </p>
-              <div className="lg:py-[20px]">
+              <div className="lg:py-[20px] py-[20px]">
                 <button className="ve-cta-btn ">Explore Services</button>
               </div>
               <div className="flex gap-8">
                 <div className="border-r border-gray-600 pr-4">
-                  <p className="text-[25px] font-black text-white">$4.2B+</p>
-                  <p className="text-[13px] font-bold uppercase tracking-wider text-[var(--accents-5)]">
+                  <p className="text-[20px] sm:text-[25px] font-black text-white">$4.2B+</p>
+                  <p className="text-[10px] sm:text-[12px] font-bold uppercase tracking-wider text-[var(--accents-5)]">
                     Assets Managed
                   </p>
                 </div>
                 <div className="border-r border-gray-600 pr-4">
-                  <p className="text-[25px] font-black text-white">97%</p>
-                  <p className="text-[13px] font-bold uppercase tracking-wider text-[var(--accents-5)]">
+                  <p className="text-[20px] sm:text-[25px] font-black text-white">97%</p>
+                  <p className="text-[10px] sm:text-[12px] font-bold uppercase tracking-wider text-[var(--accents-5)]">
                     Client Satisfaction
                   </p>
                 </div>
                 <div className="">
-                  <p className="text-[25px] font-black text-white">12+</p>
-                  <p className="text-[13px] font-bold uppercase tracking-wider text-[var(--accents-5)]">
+                  <p className="text-[20px] sm:text-[25px] font-black text-white">12+</p>
+                  <p className="text-[10px] sm:text-[12px] font-bold uppercase tracking-wider text-[var(--accents-5)]">
                     Years Experience
                   </p>
                 </div>
@@ -257,7 +257,7 @@ export default function Home() {
             <div className="lg:col-span-4">
               <Image
                 src="/main/programmer-night.jpg"
-                className="rounded"
+                className="rounded hidden sm:block"
                 alt="Hero Image"
                 width={600}
                 height={400}
