@@ -1,6 +1,9 @@
 import { Montserrat } from "next/font/google";
 import "./globals.css";
-
+import Header from "@/Header";
+import Bottom from "@/Bottom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const montserrat = Montserrat({
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -16,7 +19,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={montserrat.variable}>
       <body className="min-h-screen font-sans">
-        {children}
+        <>
+          {children}
+          <ToastContainer position="top-right" autoClose={3000} />
+        </>
       </body>
     </html>
   );
